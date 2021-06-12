@@ -1,79 +1,81 @@
-using System;
 using System.Collections.Generic;
 
-namespace webParser
+namespace tiktokParser
 {
     public class Available
     {
-        public static String Notice = "Notice:" +
-                                      "\n@Copyright labile 2021" +
-                                      "\nhttps://github.com/labi-le/" +
-                                      "\n\n" +
-                                      " Use " + String.Join(", ", ParserArgs()) +
-                                      " to choose parse, available parsers:\n  " + String.Join(", ", Parser()) +
-                                      "\n Use word random to use random parser" +
-                                      "\n Use " + String.Join(", ", HeadlessArgs()) + " to see the parsing process" +
-                                      "\n Use " + String.Join(", ", UrlArgs()) + " to parse url" +
-                                      "\n Use " + String.Join(", ", ShortUrlArgs()) + " to shorten the link" +
-                                      "\n Use " + String.Join(", ", DisableGpuArgs()) + " to don't use gpu" +
-                                      "\n Use " + String.Join(", ", OutPutFile()) + " to set file in which the link will be saved" +
-                                      "\n Use " + String.Join(", ", SetBrowserBinaryPathArgs()) + " set browser binary path" +
-                                      "\n Use " + String.Join(", ", BrowserArgs()) +
-                                      " to choose browser, available browsers: " +
-                                      String.Join(", ", Browser()) +
-                                      "\n\n" +
-                                      " DEFAULT: parser random, headless true, shorting url false, browser firefox, gpu disabled";
+        public static readonly string Notice = "Notice:" +
+                                               "\n@Copyright labile 2021" +
+                                               "\nhttps://github.com/labi-le/" +
+                                               "\n\n" +
+                                               " Use " + string.Join(", ", ParserArgs()) +
+                                               " to choose parse, available parsers:\n  " +
+                                               string.Join(", ", Parser()) +
+                                               "\n Use " + string.Join(", ", HeadlessArgs()) +
+                                               " to see the parsing process" +
+                                               "\n Use " + string.Join(", ", UrlArgs()) + " to parse url" +
+                                               "\n Use " + string.Join(", ", ShortUrlArgs()) + " to shorten the link" +
+                                               "\n Use " + string.Join(", ", DisableGpuArgs()) + " to don't use gpu" +
+                                               "\n Use " + string.Join(", ", OutPutFile()) +
+                                               " to set file in which the link will be saved" +
+                                               "\n Use " + string.Join(", ", SetBrowserBinaryPathArgs()) +
+                                               " set browser binary path" +
+                                               "\n Use " + string.Join(", ", BrowserArgs()) +
+                                               " to choose browser, available browsers: " +
+                                               string.Join(", ", Browser()) +
+                                               "\n\n" +
+                                               " DEFAULT: parser random, headless true, shorting url false, browser firefox, gpu disabled";
 
         public static List<string> OutPutFile()
         {
             return new List<string> {"--output-file", "-o"};
         }
 
-        public static List<String> Parser()
+        public static List<string> Parser()
         {
-            return new List<String>
-                {"snaptik", "ssstik", "ttdownloader", "musicaldown", "savefrom", "tiktokfull"};
+            return new List<string>
+                {"api-wrapper", "api-snaptik", "snaptik", "ssstik", "ttdownloader", "musicaldown", "savefrom", "tiktokfull"};
         }
 
-        public static List<String> Browser()
+        public static List<string> Browser()
         {
-            return new List<String> {"firefox", "chromium"};
+            return new List<string> {"firefox", "chromium"};
         }
 
 
-        public static List<String> ParserArgs()
+        public static List<string> ParserArgs()
         {
-            return new List<String> {"--parser", "-p"};
+            return new List<string> {"--parser", "-p"};
         }
 
-        public static List<String> SetBrowserBinaryPathArgs()
+        public static List<string> SetBrowserBinaryPathArgs()
         {
-            return new List<String> {"--set-browser-binary-path", "-set-binary"};
+            return new List<string> {"--set-browser-binary-path", "-set-binary"};
         }
 
-        public static List<String> BrowserArgs()
+        public static List<string> BrowserArgs()
         {
-            return new List<String> {"--browser", "-b"};
+            return new List<string> {"--browser", "-b"};
         }
 
-        public static List<String> UrlArgs()
+        public static List<string> UrlArgs()
         {
-            return new List<String> {"--url", "-u"};
+            return new List<string> {"--url", "-u"};
         }
 
-        public static List<String> HeadlessArgs()
+        public static List<string> HeadlessArgs()
         {
-            return new List<String> {"--headless", "-h"};
+            return new List<string> {"--headless", "-h"};
         }
 
-        public static List<String> ShortUrlArgs()
+        public static List<string> ShortUrlArgs()
         {
-            return new List<String> {"--short-url", "-s"};
+            return new List<string> {"--short-url", "-s"};
         }
 
-        public static List<String> DisableGpuArgs()
+        public static List<string> DisableGpuArgs()
         {
-            return new List<String> {"--disable-gpu", "-d"};
+            return new List<string> {"--disable-gpu", "-d"};
         }
     }
 }

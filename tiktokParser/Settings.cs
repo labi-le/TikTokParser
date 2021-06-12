@@ -1,17 +1,17 @@
 using System;
 
-namespace webParser
+namespace tiktokParser
 {
     public class Settings
     {
-        public String DefaultParser = Available.Parser()[new Random().Next(0, Available.Parser().Count)];
-        public String Url;
+        public string DefaultParser = Available.Parser()[new Random().Next(0, Available.Parser().Count)];
+        public string Url;
         public bool Headless = true;
         public bool ShortUrl = false;
         public bool DisableGpu = true;
-        public String DefaultBrowser = "firefox";
-        public String OutPutFile = "url";
+        public string DefaultBrowser = "firefox";
+        public string OutPutFile = "url";
 
-        public String BrowserBinaryPath;
+        public string BrowserBinaryPath;
     }
 }

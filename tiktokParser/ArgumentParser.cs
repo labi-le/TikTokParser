@@ -1,67 +1,88 @@
 using System;
 
-namespace webParser
+namespace tiktokParser
 {
     public class ArgumentParser
     {
-        private string[] args;
-        private Settings Settings = new Settings();
+        private readonly string[] _args;
+        private readonly Settings _settings = new Settings();
 
-        public ArgumentParser(String[] args)
+        public ArgumentParser(string[] args)
         {
-            this.args = args;
+            _args = args;
         }
 
         public Settings Parse()
         {
-            if (args.Length < 2)
+            if (_args.Length < 2)
             {
                 Notice();
             }
 
-            for (int i = 0; i < args.Length; i++)
+            for (int i = 0; i < _args.Length; i++)
             {
-                if (Available.ParserArgs().Contains(args[i]) && Available.Parser().Contains(args[i + 1]))
+                if (Available.ParserArgs().Contains(_args[i]) && Available.Parser().Contains(_args[i + 1]))
                 {
-                    Settings.DefaultParser = args[i + 1];
+                    _settings.DefaultParser = _args[i + 1];
                 }
-                else if (Available.UrlArgs().Contains(args[i]))
+
+                if (Available.UrlArgs().Contains(_args[i]))
                 {
-                    Settings.Url = args[i + 1];
+                    string url = _args[i + 1];
+                    if (CheckUrlValid(url))
+                    {
+                        _settings.Url = url;
+                    }
+                    else
+                    {
+                        Notice();
+                    }
                 }
-                else if (Available.OutPutFile().Contains(args[i]))
+
+                if (Available.OutPutFile().Contains(_args[i]))
                 {
-                    Settings.OutPutFile = args[i + 1];
+                    _settings.OutPutFile = _args[i + 1];
                 }
-                else if (Available.SetBrowserBinaryPathArgs().Contains(args[i]))
+
+                if (Available.SetBrowserBinaryPathArgs().Contains(_args[i]))
                 {
-                    Settings.OutPutFile = args[i + 1];
+                    _settings.OutPutFile = _args[i + 1];
                 }
-                else if (Available.HeadlessArgs().Contains(args[i]))
+
+                if (Available.HeadlessArgs().Contains(_args[i]))
                 {
-                    Settings.Headless = false;
+                    _settings.Headless = false;
                 }
-                else if (Available.BrowserArgs().Contains(args[i]) && Available.Browser().Contains(args[i + 1]))
+
+                if (Available.BrowserArgs().Contains(_args[i]) && Available.Browser().Contains(_args[i + 1]))
                 {
-                    Settings.DefaultBrowser = args[i + 1];
+                    _settings.DefaultBrowser = _args[i + 1];
                 }
-                else if (Available.ShortUrlArgs().Contains(args[i]))
+
+                if (Available.ShortUrlArgs().Contains(_args[i]))
                 {
-                    Settings.ShortUrl = true;
+                    _settings.ShortUrl = true;
                 }
-                else if (Available.DisableGpuArgs().Contains(args[i]))
+
+                if (Available.DisableGpuArgs().Contains(_args[i]))
                 {
-                    Settings.DisableGpu = true;
+                    _settings.DisableGpu = true;
                 }
             }
 
-            return Settings;
+            return _settings;
         }
 
-        private void Notice()
+        private static void Notice()
         {
             Console.Write(Available.Notice);
             Environment.Exit(1);
+        }
+
+
+        private static bool CheckUrlValid(string url)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult) && uriResult.Scheme == Uri.UriSchemeHttps;
         }
     }
 }

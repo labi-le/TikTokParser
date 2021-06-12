@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using OpenQA.Selenium;
 
-namespace webParser
+namespace tiktokParser
 {
     internal class Program
     {
@@ -10,18 +9,15 @@ namespace webParser
         {
             Settings settings = new ArgumentParser(args).Parse();
 
-            IWebDriver driver = new Browser(settings).Get();
-            Parser url = new Parser(driver, settings.Url, settings.DefaultParser, settings.ShortUrl);
-
+            Parser url = new Parser(settings);
+            
             try
             {
                 File.WriteAllText(settings.OutPutFile, url.Parse());
-                driver.Close();
                 Environment.Exit(0);
             }
             catch (Exception)
             {
-                driver.Close();
                 Environment.Exit(1);
             }
         }
