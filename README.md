@@ -2,7 +2,7 @@
 
 ```bash
  Use --parser, -p to choose parse, available parsers:
-  snaptik, ssstik, ttdownloader, musicaldown, savefrom, tiktokfull
+  snaptik, ssstik, ttdownloader, musicaldown, savefrom, tiktokfull, api-wrapper, api-snaptik
  Use word random to use random parser
  Use --headless, -h to see the parsing process
  Use --url, -u to parse url
