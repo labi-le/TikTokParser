@@ -46,7 +46,7 @@ namespace tiktokParser
 
                 if (Available.SetBrowserBinaryPathArgs().Contains(_args[i]))
                 {
-                    _settings.OutPutFile = _args[i + 1];
+                    _settings.BrowserBinaryPath = _args[i + 1];
                 }
 
                 if (Available.HeadlessArgs().Contains(_args[i]))

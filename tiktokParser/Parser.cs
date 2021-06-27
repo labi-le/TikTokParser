@@ -33,6 +33,7 @@ namespace tiktokParser
             return _isShort ? ShortUrl(SelectParser()) : SelectParser();
         }
 
+
         private string ShortUrl(string longUrl)
         {
             WebRequest request = WebRequest.Create("https://clck.ru/--?url=" + longUrl);
@@ -42,27 +43,18 @@ namespace tiktokParser
 
         private string SelectParser()
         {
-            switch (_parser)
+            return _parser switch
             {
-                case "snaptik":
-                    return SnapTik(new Browser(_settings).Get());
-                case "ssstik":
-                    return SssTik(new Browser(_settings).Get());
-                case "ttdownloader":
-                    return TtDownloader(new Browser(_settings).Get());
-                case "musicaldown":
-                    return MusicalDown(new Browser(_settings).Get());
-                case "savefrom":
-                    return SaveFrom(new Browser(_settings).Get());
-                case "tiktokfull":
-                    return TikTokFull(new Browser(_settings).Get());
-                case "api-wrapper":
-                    return ApiWrapper();
-                case "api-snaptik":
-                    return ApiSnaptik(new Browser(_settings).Get());
-            }
-
-            return null;
+                "snaptik" => SnapTik(new Browser(_settings).Get()),
+                "ssstik" => SssTik(new Browser(_settings).Get()),
+                "ttdownloader" => TtDownloader(new Browser(_settings).Get()),
+                "musicaldown" => MusicalDown(new Browser(_settings).Get()),
+                "savefrom" => SaveFrom(new Browser(_settings).Get()),
+                "tiktokfull" => TikTokFull(new Browser(_settings).Get()),
+                "api-wrapper" => ApiWrapper(),
+                "api-snaptik" => ApiSnaptik(new Browser(_settings).Get()),
+                _ => null
+            };
         }
 
         private string ApiWrapper()
@@ -111,10 +103,11 @@ namespace tiktokParser
 
                 var regex = new Regex(@"\b(?:https?://|www\.)\S+\b",
                     RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-                browser.Close();
                 
-                return regex.Matches(browser.PageSource)[4].ToString();
+                string url = regex.Matches(browser.PageSource)[2].ToString();
+                browser.Close();
+
+                return url;
             }
             catch (Exception e)
             {
@@ -168,6 +161,9 @@ namespace tiktokParser
 
                 IWebElement button = new WebDriverWait(browser, TimeSpan.FromSeconds(7))
                     .Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".download-icon")));
+
+                browser.Close();
+
                 return button.GetAttribute("href");
             }
             catch (Exception e)
@@ -192,6 +188,8 @@ namespace tiktokParser
 
                 IWebElement downloadButton = browser.FindElement(By.CssSelector("a.btn:nth-child(8)"));
 
+                browser.Close();
+
                 return downloadButton.GetAttribute("href");
             }
             catch (Exception e)
@@ -210,6 +208,8 @@ namespace tiktokParser
                 IWebElement button = new WebDriverWait(browser, TimeSpan.FromSeconds(7))
                     .Until(ExpectedConditions.ElementIsVisible(
                         By.XPath("//html/body/section/div/div/div/div[1]/form/div[2]/div/div[1]/div[2]/a")));
+
+                browser.Close();
 
                 return button.GetAttribute("href");
             }
@@ -238,9 +238,12 @@ namespace tiktokParser
 
 
                 IWebElement button = new WebDriverWait(browser, TimeSpan.FromSeconds(7))
-                    .Until(ExpectedConditions.ElementIsVisible(
+                    .Until(ExpectedConditions.ElementToBeClickable(
                         By.XPath("/html/body/main/section[1]/div/div/div[3]/div/div/a[2]")));
 
+                browser.Close();
+
+                Console.WriteLine(button.GetAttribute("href"));
                 return button.GetAttribute("href");
             }
             catch (Exception e)
@@ -266,7 +269,7 @@ namespace tiktokParser
 
                 IWebElement downloadButton = new WebDriverWait(browser, TimeSpan.FromSeconds(7))
                     .Until(ExpectedConditions.ElementExists(
-                        (By.XPath("/html/body/div[3]/section/div/div[1]/div/article/div[2]/div/a[4]"))));
+                        (By.XPath("/html/body/main/section[2]/div/div/article/div[2]/div/a[3]"))));
 
                 string directLink = downloadButton.GetAttribute("href");
                 Console.WriteLine(directLink);
